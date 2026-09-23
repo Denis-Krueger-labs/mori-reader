@@ -28,6 +28,8 @@
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "images/MoonIcon.h"
+#include "fontIds.h"
+#include "images/Mof64.h"
 
 namespace {
 
@@ -612,18 +614,62 @@ void SleepActivity::renderCustomSleepScreen() const {
 // sequence, used once for the sleep image. It never runs the multi-flash GC
 // waveform (0xF7) that FULL_REFRESH selects (#2471's blinking complaint).
 void SleepActivity::renderDefaultSleepScreen() const {
+  const auto pageWidth = renderer.getScreenWidth();
   const auto pageHeight = renderer.getScreenHeight();
 
   renderer.clearScreen();
 
-  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 65, " /\\_/\\");
-  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 45, "( -.- )");
-  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 25, " > ^ <");
+  // Tiny goth mof floating above MORI
+  renderer.drawImage(
+      Mof64,
+      (pageWidth - 64) / 2,
+      pageHeight / 2 - 215,
+      64,
+      64);
 
-  renderer.drawCenteredText(UI_12_FONT_ID, pageHeight / 2 + 10, "MORI", true, EpdFontFamily::BOLD);
-  renderer.drawCenteredText(UI_10_FONT_ID, pageHeight / 2 + 35, "eepy...");
-  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 + 65, "do not disturb the cat");
+  // Big eepy MORI
+  renderer.drawCenteredText(
+      NOTOSANS_18_FONT_ID,
+      pageHeight / 2 - 125,
+      " /\\_/\\",
+      true,
+      EpdFontFamily::BOLD);
 
+  renderer.drawCenteredText(
+      NOTOSANS_18_FONT_ID,
+      pageHeight / 2 - 85,
+      "( -.- )",
+      true,
+      EpdFontFamily::BOLD);
+
+  renderer.drawCenteredText(
+      NOTOSANS_18_FONT_ID,
+      pageHeight / 2 - 45,
+      " > ^ <",
+      true,
+      EpdFontFamily::BOLD);
+
+  // Big MORI branding
+  renderer.drawCenteredText(
+      NOTOSANS_18_FONT_ID,
+      pageHeight / 2 + 25,
+      "MORI",
+      true,
+      EpdFontFamily::BOLD);
+
+  renderer.drawCenteredText(
+      UI_12_FONT_ID,
+      pageHeight / 2 + 65,
+      "eepy...",
+      true,
+      EpdFontFamily::BOLD);
+
+  renderer.drawCenteredText(
+      SMALL_FONT_ID,
+      pageHeight / 2 + 100,
+      "do not disturb the cat");
+
+  // Keep CrossPoint's existing light/dark sleep behaviour
   if (SETTINGS.sleepScreen != CrossPointSettings::SLEEP_SCREEN_MODE::LIGHT) {
     renderer.invertScreen();
   }
