@@ -4,18 +4,23 @@
 #include <I18n.h>
 
 #include "fontIds.h"
-#include "images/Logo120.h"
 
 void BootActivity::onEnter() {
   Activity::onEnter();
 
-  const auto pageWidth = renderer.getScreenWidth();
   const auto pageHeight = renderer.getScreenHeight();
 
   renderer.clearScreen();
-  renderer.drawImage(Logo120, (pageWidth - 120) / 2, (pageHeight - 120) / 2, 120, 120);
-  renderer.drawCenteredText(UI_10_FONT_ID, pageHeight / 2 + 70, "MORI Reader", true, EpdFontFamily::BOLD);
-  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 + 95, tr(STR_BOOTING));
+
+  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 65, " /\\_/\\");
+  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 45, "( o.o )");
+  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 - 25, " > ^ <");
+
+  renderer.drawCenteredText(UI_12_FONT_ID, pageHeight / 2 + 10, "MORI", true, EpdFontFamily::BOLD);
+  renderer.drawCenteredText(UI_10_FONT_ID, pageHeight / 2 + 35, "Reader");
+  renderer.drawCenteredText(SMALL_FONT_ID, pageHeight / 2 + 65, "summoning books...");
+
   renderer.drawCenteredText(SMALL_FONT_ID, pageHeight - 30, CROSSPOINT_VERSION);
+
   renderer.displayBuffer();
 }
